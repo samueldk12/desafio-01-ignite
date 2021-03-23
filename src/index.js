@@ -18,7 +18,7 @@ function checksExistsUserAccount(request, response, next) {
   )
   
   if(!user_object)
-    return response.status(400).json({error:'User not found!'})
+    return response.status(404).json({error:'User Not Found!'})
 
   request.user = user_object;
   
@@ -33,7 +33,7 @@ app.post('/users', (request, response) => {
    )
 
    if(alredyExistUsername)
-    return response.status(400).json({error: 'Mensagem do erro'})
+    return response.status(400).json({error: 'User Exist!'})
 
    const user = {
      id : uuidv4(),
@@ -109,16 +109,16 @@ app.delete('/todos/:id', checksExistsUserAccount, (request, response) => {
   const {user} = request;
   const { id } = request.params;
 
-  const todo_object = user.todos.find(
+  const todo_object = user.todos.findIndex(
     todo => todo.id === id
   )
 
-  if(!todo_object)
+  if(todo_object == -1)
     return response.status(404).json({error:'Todo not found'})
 
   user.todos.splice(todo_object,1)
 
-  return response.status(200).json({message: 'Todo Removed!'})
+  return response.status(204).json({message: 'Todo Removed!'})
 });
 
 module.exports = app;
