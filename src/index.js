@@ -85,7 +85,7 @@ app.put('/todos/:id', checksExistsUserAccount, (request, response) => {
   todo_object.title = title
   todo_object.deadline = deadline
 
-  return response.status(200).json({message: 'Todo Updated!'})
+  return response.status(200).json(todo_object)
 });
 
 app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {
@@ -101,7 +101,7 @@ app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {
 
   todo_object.done = true
 
-  return response.status(200).json({message: 'Todo Completed!'})
+  return response.status(200).json(todo_object)
 });
 
 
